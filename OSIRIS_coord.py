@@ -1,7 +1,7 @@
 import math
 
 #Cartesian coordinates
-A = [1.6147, -0.950607, 1.08043]
+A = [-1.06555, 0.867515, 0.0117387]
 
 #Convert Cartesian to Spherical coordinates
 def rect2sph(A):
