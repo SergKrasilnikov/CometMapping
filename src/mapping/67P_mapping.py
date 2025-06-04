@@ -1,88 +1,70 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import os
 
-# extent=[-180, 180, -90, 90]
-#
-# # === File paths (UPDATE THESE) ===
-# excel_path = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx'
-# background_image_path = 'C:/Learning/Coding/GIT/67P-coordinates/data/input/map/gs_equidistant_cylindrical_lat0_lon0_ms2048.jpg'
-# output_image_path = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/exposure_map.jpg'
-#
-# # === Read Excel file ===
-# df = pd.read_excel(excel_path)
-#
-# # === Ensure Latitude and Longitude columns exist ===
-# if 'Latitude' not in df.columns or 'Longitude' not in df.columns:
-#     raise ValueError("Excel file must contain 'Latitude' and 'Longitude' columns.")
-#
-# latitudes = df['Latitude']
-# longitudes = df['Longitude']
-#
-# # === Load background map image ===
-# img = mpimg.imread(background_image_path)
-#
-# # === Create figure and plot ===
-# fig, ax = plt.subplots(figsize=(12, 6))
-#
-# # Set proper extent for equirectangular projection: [-180, 180] in lon, [-90, 90] in lat
-# ax.imshow(img, extent=[-180, 180, -90, 90], aspect='auto')
-#
-# # Plot the points
-# ax.scatter(longitudes, latitudes, color='red', s=20, label='Data Points')
-#
-# # Configure axis
-# ax.set_xlim([-180, 180])
-# ax.set_ylim([-90, 90])
-# ax.set_xlabel('Longitude')
-# ax.set_ylabel('Latitude')
-# ax.set_title('Points on Custom Map (Equirectangular)')
-# ax.grid(True, linestyle='--', alpha=0.5)
-# ax.legend()
-#
-# # Save as JPG
-# plt.tight_layout()
-# plt.savefig(output_image_path, dpi=300)
-# print(f"✅ Map saved to: {output_image_path}")
-#
-# # Show the plot
-# plt.show()
+excel_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx'
+background_image = 'C:/Learning/Coding/GIT/67P-coordinates/data/input/map/gs_equidistant_cylindrical_lat0_lon0_ms2048.jpg'
+output_image = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/exposure_map.jpg'
 
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
-
-# === File path ===
-input_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx'  # Change this to your file path
-
-# === Read Excel file ===
-df = pd.read_excel(input_file)
-
-# === Ensure required columns exist ===
-if 'Latitude' not in df.columns or 'Longitude' not in df.columns:
-    raise ValueError("Excel file must contain 'Latitude' and 'Longitude' columns.")
+# read the Excel file
+df = pd.read_excel(excel_file)
 
 latitudes = df['Latitude']
 longitudes = df['Longitude']
 
-# === Create a map with equirectangular projection ===
-fig = plt.figure(figsize=(12, 6))
-ax = plt.axes(projection=ccrs.PlateCarree())
+# load the basemap image
+img = mpimg.imread(background_image)
 
-# Add map features
-ax.set_global()
-ax.coastlines()
-ax.add_feature(cfeature.BORDERS, linestyle=':')
-ax.gridlines(draw_labels=True, linestyle='--')
+# plot the map
+fig, ax = plt.subplots(figsize=(16, 8))
+ax.imshow(img, extent=[-180, 180, -90, 90], aspect='equal')
 
-# Plot the points
-ax.scatter(longitudes, latitudes, color='red', s=20, transform=ccrs.PlateCarree(), label='Data Points')
+# color mapping function
+def get_color(type_value):
+    if str(type_value).strip() == '1':
+        return 'red'
+    elif str(type_value).strip() in ['2', '3', '2, 3']:
+        return 'green'
+    elif str(type_value).strip() in ['4', '2, 4']:
+        return 'yellow'
+    else:
+        return 'gray'
 
-plt.title('Map with Latitude and Longitude Points (Equirectangular Projection)')
-plt.legend()
+# plot colored points
+for _, row in df.iterrows():
+    lat = row['Latitude']
+    lon = row['Longitude']
+    type_val = row['Type']
+    color = get_color(type_val)
+    ax.scatter(lon, lat, color=color, s=60)
+
+# mapp settings
+ax.set_xlim([-180, 180])
+ax.set_ylim([-90, 90])
+ax.xaxis.tick_top()
+ax.yaxis.tick_right()
+plt.xticks([-180, -150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 150, 180])
+plt.yticks([75, 60, 45, 30, 15, 0, -15, -30, -45, -60, -75])
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+# ax.set_xlabel('Longitude')
+# ax.set_ylabel('Latitude')
+# ax.set_title('Map with Points Colored by Type')
+ax.grid(True, color='maroon', linestyle='--', alpha=0.5)
+ax.legend()
+
+# legend
+import matplotlib.patches as mpatches
+legend_patches = [
+    mpatches.Patch(color='red', label='Type 1'),
+    mpatches.Patch(color='green', label='Type 2, 3'),
+    mpatches.Patch(color='yellow', label='Type 4'),
+]
+ax.legend(handles=legend_patches, loc='upper right', prop={'size': 14})
+
+# output
 plt.tight_layout()
+plt.savefig(output_image, dpi=600)
+
+# show the result
 plt.show()

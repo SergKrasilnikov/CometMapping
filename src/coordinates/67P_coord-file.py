@@ -13,15 +13,16 @@ def rect2sph(A):
 
     if projlen == 0:
         lon = 0.0
-    if lon < 0:
-        lon += 360
+    # current longitudes from -180 to +180. Switch strings bellow ON if you need longitudes from 0 to 360.
+    # if lon < 0:
+    #     lon += 360
 
     rad = math.sqrt(A[0]**2 + A[1]**2 + A[2]**2)
     return [round(lat, 2), round(lon, 2), round(rad, 2)]
 
 # path
-input_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/input/db/coordinates_long_lat_cliff_exposure.xlsx'
-output_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results_cliff_exposure.xlsx'
+input_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/input/db/coordinates_long_lat.xlsx'
+output_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx'
 
 # Read Excel file
 df = pd.read_excel(input_file)

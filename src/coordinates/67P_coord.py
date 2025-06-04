@@ -1,7 +1,7 @@
 import math
 
 #Cartesian coordinates
-A = [-0.451221198, 1.27994740009307, -0.674912035]
+A = [-1.02524, -1.38687, 0.352553]
 
 #Convert Cartesian to Spherical coordinates
 def rect2sph(A):
@@ -16,8 +16,9 @@ def rect2sph(A):
         lon = - math.acos(A[0]/projlen) * 180/math.pi
     if projlen == 0:
         lon = 0.0
-    if lon < 0:
-        lon += 360
+    # current longitudes from -180 to +180. Switch strings bellow ON if you need longitudes from 0 to 360.
+    # if lon < 0:
+    #     lon += 360
 
     rad = math.sqrt(A[0]**2 + A[1]**2 + A[2]**2)
     return [round(lat,2), round(lon,2), round(rad,2)]
