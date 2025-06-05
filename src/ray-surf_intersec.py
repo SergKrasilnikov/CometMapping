@@ -3,8 +3,10 @@ import trimesh
 import numpy as np
 
 # [-1.06555, 0.867515, 0.0117387] 0.49, 140.85, 1.37
-lon = 0.49  # longitude in degrees
-lat = 140.85  # latitude in degrees
+# [1.16249001, 0.363859236, 1.223576546]	45.13	17.38
+
+lon = 45.13  # longitude in degrees
+lat = 17.38  # latitude in degrees
 max_radius_km = 3.0
 shape_model_path = "e:/Files/data/Comet67P/SPG1.0_SPC1.5_QM/SPG1.0_SPC1.5_merged_shape_1M.ply"
 
@@ -40,9 +42,11 @@ else:
 
     # Filter only those within max_radius_km
     within_radius = dists <= max_radius_km
+
     if not np.any(within_radius):
         print(f"No intersection found within {max_radius_km} km.")
     else:
+        print('|||', locations)
         # Choose the farthest intersection within the radius
         idx_farthest = np.argmax(dists * within_radius)
         point = locations[idx_farthest]
