@@ -1,7 +1,7 @@
 import math
 
 #Cartesian coordinates
-A = [-1.02524, -1.38687, 0.352553]
+A = [1.16249001, 0.363859236, 1.223576546]
 
 #Convert Cartesian to Spherical coordinates
 def rect2sph(A):
@@ -21,10 +21,10 @@ def rect2sph(A):
     #     lon += 360
 
     rad = math.sqrt(A[0]**2 + A[1]**2 + A[2]**2)
-    return [round(lat,2), round(lon,2), round(rad,2)]
+    return [round(lon,2), round(lat,2), round(rad,2)]
 
 #Convert Spherical to Cartesian coordinates
-def sph2rect(lat, lon, rad):
+def sph2rect(lon, lat, rad):
     lat_rad = math.radians(lat)
     lon_rad = math.radians(lon)
 
@@ -39,7 +39,7 @@ print("Original Cartesian (X, Y, Z):", A)
 
 # Convert to spherical
 sph_coords = rect2sph(A)
-print("Converted to Spherical (lat, lon, rad):", sph_coords)
+print("Converted to Spherical (lon, lat, rad):", sph_coords)
 
 # Convert back to Cartesian
 rect_coords = sph2rect(*sph_coords)
