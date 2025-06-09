@@ -4,8 +4,9 @@ import numpy as np
 import math
 
 # === Config ===
-input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/input/db/Fornasier_comet67P_statics_0414_test.xlsx"
-output_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_cartesian.xlsx"
+# input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results_cliff_exposure.xlsx"
+input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/input/db/Fornasier_comet67P_statics_0414.xlsx"
+output_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_cartesian_Fornasier.xlsx"
 shape_model_path = "C:/Learning/Coding/GIT/67P-coordinates/data/input/model/SPG1.0_SPC1.5_merged_shape_1M.ply"
 max_radius_km = 3.5
 
@@ -25,10 +26,9 @@ if not isinstance(mesh, trimesh.Trimesh):
     mesh = mesh.dump().sum()
 
 # Optional: clean up geometry if needed
-mesh.remove_degenerate_faces()
-mesh.remove_duplicate_faces()
+mesh.update_faces(mesh.nondegenerate_faces())          # removes degenerate faces
+mesh.update_faces(mesh.unique_faces())                # removes duplicate faces
 mesh.remove_unreferenced_vertices()
-mesh.process(validate=True)
 
 print("Shape model loaded and validated.")
 
@@ -66,8 +66,16 @@ for idx, row in df.iterrows():
         Z_list.append(None)
         continue
 
-    dists = np.linalg.norm(locations - origin, axis=1)
-    within_radius = dists <= max_radius_km
+    # dists = np.linalg.norm(locations - origin, axis=1)
+    # within_radius = dists <= max_radius_km
+
+    # dists = np.linalg.norm(locations - origin, axis=1)
+    #
+    # # Safe: create mask directly from dists
+    # within_radius = dists <= max_radius_km
+
+    dists = np.linalg.norm(locations - origin, axis=1)  # shape: (num_intersections,)
+    within_radius = dists <= max_radius_km  # shape: (num_intersections,)
 
     if not np.any(within_radius):
         print(f"⚠️ No valid intersections within {max_radius_km} km for row {idx}")
@@ -76,10 +84,26 @@ for idx, row in df.iterrows():
         Z_list.append(None)
         continue
 
-    # Get the farthest valid intersection
+    # Now this works safely
     masked_dists = np.where(within_radius, dists, -np.inf)
     idx_max = np.argmax(masked_dists)
     point = locations[idx_max]
+
+    # masked_dists = np.where(within_radius, dists, -np.inf)
+    # idx_max = np.argmax(masked_dists)
+    # point = locations[idx_max]
+
+    # if not np.any(within_radius):
+    #     print(f"⚠️ No valid intersections within {max_radius_km} km for row {idx}")
+    #     X_list.append(None)
+    #     Y_list.append(None)
+    #     Z_list.append(None)
+    #     continue
+    #
+    # # Get the farthest valid intersection
+    # # masked_dists = np.where(within_radius, dists, -np.inf)
+    # idx_max = np.argmax(masked_dists)
+    # point = locations[idx_max]
 
     # Append result
     X_list.append(point[0])
