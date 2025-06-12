@@ -6,8 +6,8 @@ import numpy as np
 # [1.16249001, 0.363859236, 1.223576546]	45.13	17.38
 
 # === Parameters ===
-lon = 17.38  # degrees
-lat = 45.13  # degrees
+lon = -174.7  # degrees
+lat = -0.8  # degrees
 max_radius_km = 3.5
 shape_model_path = "C:/Learning/Coding/GIT/67P-coordinates/data/input/model/SPG1.0_SPC1.5_merged_shape_1M.ply"
 # coord_module_path = "C:/Learning/Coding/GIT/67P-coordinates/src/coordinates/67P_coord.py"

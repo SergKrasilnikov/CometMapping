@@ -5,8 +5,8 @@ import math
 
 # === Config ===
 # input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results_cliff_exposure.xlsx"
-input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/input/db/Fornasier_comet67P_statics_0414.xlsx"
-output_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_cartesian_Fornasier.xlsx"
+input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx"
+output_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results_povered.xlsx"
 shape_model_path = "C:/Learning/Coding/GIT/67P-coordinates/data/input/model/SPG1.0_SPC1.5_merged_shape_1M.ply"
 max_radius_km = 3.5
 
