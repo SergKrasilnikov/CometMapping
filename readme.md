@@ -2,7 +2,6 @@
 
 ## CometMapping - Operating with comet coordinates and mapping
 
----
 Planetary Remote Sensing Laboratory / The Hong Kong Polytechnic University
 
 ### Author
