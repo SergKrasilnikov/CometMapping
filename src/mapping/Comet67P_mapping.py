@@ -1,10 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+from pathlib import Path
 
-excel_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx'
-background_image = 'C:/Learning/Coding/GIT/67P-coordinates/data/input/map/gs_equidistant_cylindrical_lat0_lon0_ms2048.jpg'
-output_image = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/exposure_map.jpg'
+# config
+project_root = Path(__file__).resolve().parent.parent.parent # get the root directory of the project (2 levels up)
+excel_file = project_root / 'data' / 'output' / 'db' / 'coordinates_long_lat_results.xlsx'
+background_image = project_root / 'data' / 'input' / 'map' / 'gs_equidistant_cylindrical_lat0_lon0_ms2048.jpg'
+output_image = project_root / 'data' / 'output' / 'map' / 'exposure_map.jpg'
 
 # read the Excel file
 df = pd.read_excel(excel_file)

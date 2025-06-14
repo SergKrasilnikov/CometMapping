@@ -1,15 +1,17 @@
 import math
 import trimesh
 import numpy as np
-
-# [-1.06555, 0.867515, 0.0117387] 0.49, 140.85, 1.37 example of one intersection
-# [1.16249001, 0.363859236, 1.223576546]	45.13	17.38 example of three intersections
+from pathlib import Path
 
 # input parameters
+# [-1.06555, 0.867515, 0.0117387] 0.49, 140.85, 1.37 example of one intersection
+# [1.16249001, 0.363859236, 1.223576546]	45.13	17.38 example of three intersections
 lon = 17.38  # degrees
 lat = 45.13  # degrees
 max_radius_km = 3.5 # maximum distance for searching. For Comet 67P, the maximum radius is <3.5 km.
-shape_model_path = "C:/Learning/Coding/CometMapping/data/input/model/SPG1.0_SPC1.5_merged_shape_1M.ply"
+# config
+project_root = Path(__file__).resolve().parent.parent.parent # get the root directory of the project (2 levels up)
+shape_model_path = project_root / 'data' / 'input' / 'model' / 'SPG1.0_SPC1.5_merged_shape_1M.ply'
 
 # convert spherical to unit vector
 def sph2unitvec(lat, lon):

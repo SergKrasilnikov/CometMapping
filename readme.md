@@ -23,7 +23,19 @@ The number of programs for operating with comet coordinates and mapping. The bas
 - Tools related to the shapefile of the comet work with the spatial position of objects (points) and create these
 objects in OBJ format or get spatial information.
 
-#### The list of programs:
+---
+
+### The list of programs:
+```
+get_tin_info.py & create_shapefile.py
+```
+Operate with spatial information of objects. `get_tin_info.py` gets the information from the OBJ file created in
+Blender. The OBJ file consists of points (spheres) in a 3D spatial environment, along with the locations of the
+features. The location of these points can be described by Cartesian coordinates (X, Y, Z). The tool creates an Excel
+file with coordinates for each point.
+`create_shapefile.py` makes reconversion, transforming Cartesian coordinates (X, Y, Z) from an Excel file into a 3D OBJ
+file that could be opened in 3D software.
+
 ```
 CartToSpher_coord.py & CartToSpher_coord_file.py
 ```
@@ -49,13 +61,18 @@ Using matplotlib libraries to map features in Equirectangular projection. Progra
 file with the Longitude and Latitude coordinates of features and a preload base map. As the base map, the hillshade map
 of Comet 67P was used in Equirectangular projection.
 
-### Data
-- Our mapping results [GitHub Pages](https://)
-- Fornasier water exposure dataset [GitHub Pages](https://) - the dataset published by Fornasier et al.,
-[(2023)](https://) used for comparision with our results.
-- Comet 67P/Churyumov–Gerasimenko shape model and based on it map [67P SHAP8](https://)
+---
 
-### How to cite:
+### Data (__CORRECT__)
+- Our mapping results [Zenodo](https://)
+- Fornasier water exposure dataset [____](https://) - the dataset published by Fornasier et al.,
+[(2023)](https://) used for comparision with our results.
+- Comet 67P/Churyumov–Gerasimenko shape models and based on it hilshade map [SHAP5](https://) and
+[SHAP8](https://)
+
+---
+
+### How to cite:(__CORRECT__)
 These programs used in a scientific project will be published in 2025-2026:
 
 >Krasilnikov, S.S., Wu, B., Skorov, Yu., Xin, Y., Xun, W., Küppers, M., 2025. The mechanisms of water ice exposure on

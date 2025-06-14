@@ -4,51 +4,52 @@ import bpy
 import trimesh
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
 def get_all_points(points_save_path):
-    # Collect the positions of all reference points in the scene (assuming it is Empty or a collection of objects)
+    # collect the positions of all reference points in the scene (assuming it is Empty or a collection of objects)
     reference_points = []
     for obj in bpy.data.objects:
         reference_points.append((obj.name, obj.location[:]))
 
-    # Write name + xyz to file
+    # write name + xyz to file
     with open(points_save_path, "w") as f:
         for name, loc in reference_points:
             f.write(f"{name} {loc[0]} {loc[1]} {loc[2]}\n")
 
 def get_poits_tin(ply_model_path, points_info_path, result_save_path):
-    # 1. Loading the PLY model
+    # 1. loading the PLY model
     mesh = trimesh.load(ply_model_path)
     pq = trimesh.proximity.ProximityQuery(mesh)
-    # 2. Load reference point
+    # 2. load reference point
     reference_points = np.genfromtxt(points_info_path, dtype=None, encoding=None)
 
-    # To store the results
+    # to store the results
     output = []
 
-    # Find the closest face (triangle) for each point
+    # find the closest face (triangle) for each point
     for name, x, y, z in reference_points:
 
         pt = (x, y, z)
 
-        # Find the nearest face
+        # find the nearest face
         location, distance, face_index = pq.on_surface([pt])
         # face_index = mesh.nearest.faces(pt)
 
-        # Find the three vertex indices of the face
+        # find the three vertex indices of the face
         vertex_indices = mesh.faces[face_index[0]]
 
-        # Get the coordinates of the three vertices
+        # get the coordinates of the three vertices
         triangle_vertices = mesh.vertices[vertex_indices]
 
-        # Save: reference point + three vertices of the corresponding triangle
+        # save: reference point + three vertices of the corresponding triangle
         output.append({
             'name': name,
             'point': list(pt),
             'triangle_vertices': triangle_vertices.tolist()
         })
 
-    # # Writing to a file
+    # # writing to a file
     # with open(result_save_path, "w") as f:
     #     for item in output:
     #         f.write(f"Name: {item['name']}\n")
@@ -80,12 +81,12 @@ def merge_csv(result_csv, ref_csv, save_csv):
     B = pd.read_csv(ref_csv)  # Contains points_name and other data
 
 
-    # Iterate over each row in A
+    # iterate over each row in A
     for _, row in A.iterrows():
         name = row['points_name'].split('.')[0]
         x, y, z = row['x'], row['y'], row['z']
 
-        # Find the corresponding row number i in B
+        # find the corresponding row number i in B
         # matches = B.index[B['points_name'] == name].tolist()
         match = B[B['points_name'] == name]
         if not match.empty:
@@ -93,7 +94,7 @@ def merge_csv(result_csv, ref_csv, save_csv):
             # Find the column number of the 'points_name' column in that row j
             j = B.columns.get_loc('points_name')
 
-            # Write x, y, z to row i, column j+1, j+2, j+3 in B
+            # write x, y, z to row i, column j+1, j+2, j+3 in B
             if j + 3 >= len(B.columns):
                 # If there are not enough columns, add empty columns first
                 for k in range(len(B.columns), j + 4):
@@ -103,19 +104,20 @@ def merge_csv(result_csv, ref_csv, save_csv):
             B.iat[i, j + 2] = y
             B.iat[i, j + 3] = z
 
-    # Save the modified B
+    # save the modified B
     B.to_csv(save_csv, index=False)
 
 if __name__ == '__main__':
+    project_root = Path(__file__).resolve().parent.parent.parent  # get the root directory of the project (2 levels up)
+    ply_model_path = project_root / 'data' / 'input' / 'model' / 'SPG1.0_SPC1.5_merged_shape_1M.ply'
+    blend_path = project_root / 'data' / 'input' / 'model' / '67P_coord.blend' # Blender project
+    points_save_path = project_root / 'data' / 'input' / 'db' / 'reference_points.txt'
+    result_save_path = project_root / 'data' / 'input' / 'db' / 'mesh_results.txt'
+    final_save_path = project_root / 'data' / 'input' / 'db' / 'xyz_coor_results.csv'
+    reference_csv_path = project_root / 'data' / 'input' / 'db' / 'record_long_lat coordinates.csv'
+    merge_csv_path = project_root / 'data' / 'input' / 'db' / 'xyz_coor_results_merge.csv'
 
-    blend_path = r"G:\Comet_67P\Bright_spot_location\67P_coord.blend"
-    ply_model_path = r"G:\Comet_67P\Bright_spot_location\SPG1.0_SPC1.5_merged_shape_1M.ply"
-    points_save_path = r'G:\Comet_67P\Bright_spot_location\reference_points.txt'
-    result_save_path = r'G:\Comet_67P\Bright_spot_location\mesh_results.txt'
-    final_save_path = r'G:\Comet_67P\Bright_spot_location\xyz_coor_results.csv'
-    reference_csv_path = r"G:\Comet_67P\Bright_spot_location\record_long_lat coordinates.csv"
-    merge_csv_path = r'G:\Comet_67P\Bright_spot_location\xyz_coor_results_merge.csv'
-    # Open the specified blend-file (can only be called from the command line)
+    # open the specified blend-file (can only be called from the command line)
     # bpy.ops.wm.open_mainfile(filepath=blend_path)
     # get_all_points(points_save_path)
     # result_output = get_poits_tin(ply_model_path, points_save_path, result_save_path)

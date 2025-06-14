@@ -1,5 +1,11 @@
 import pandas as pd
 import math
+from pathlib import Path
+
+# config
+project_root = Path(__file__).resolve().parent.parent.parent # get the root directory of the project (2 levels up)
+input_file = project_root / 'data' / 'input' / 'db' / 'coordinates_long_lat.xlsx'
+output_file = project_root / 'data' / 'output' / 'db' / 'coordinates_long_lat_results.xlsx'
 
 # Cartesian-to-Spherical function
 def rect2sph(A):
@@ -19,10 +25,6 @@ def rect2sph(A):
 
     rad = math.sqrt(A[0]**2 + A[1]**2 + A[2]**2)
     return [round(lat, 2), round(lon, 2), round(rad, 2)]
-
-# path
-input_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/input/db/coordinates_long_lat.xlsx'
-output_file = 'C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx'
 
 # Read Excel file
 df = pd.read_excel(input_file)

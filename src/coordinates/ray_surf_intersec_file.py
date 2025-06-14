@@ -2,12 +2,15 @@ import pandas as pd
 import trimesh
 import numpy as np
 import math
+from pathlib import Path
 
 # input parameters
-input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results.xlsx"
-output_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_long_lat_results_povered.xlsx"
-shape_model_path = "C:/Learning/Coding/GIT/67P-coordinates/data/input/model/SPG1.0_SPC1.5_merged_shape_1M.ply"
 max_radius_km = 3.5 # maximum distance for searching. For Comet 67P, the maximum radius is <3.5 km.
+# config
+project_root = Path(__file__).resolve().parent.parent.parent # get the root directory of the project (2 levels up)
+input_excel = project_root / 'data' / 'input' / 'db' / 'coordinates_long_lat_results.xlsx'
+output_excel = project_root / 'data' / 'output' / 'db' / 'coordinates_long_lat_results_povered.xlsx'
+shape_model_path = project_root / 'data' / 'input' / 'model' / 'SPG1.0_SPC1.5_merged_shape_1M.ply'
 
 # convert spherical to unit vector
 def sph2unitvec(lat, lon):
@@ -25,8 +28,8 @@ if not isinstance(mesh, trimesh.Trimesh):
     mesh = mesh.dump().sum()
 
 # optional: clean up geometry
-mesh.update_faces(mesh.nondegenerate_faces())          # removes degenerate faces
-mesh.update_faces(mesh.unique_faces())                # removes duplicate faces
+mesh.update_faces(mesh.nondegenerate_faces())   # removes degenerate faces
+mesh.update_faces(mesh.unique_faces())  # removes duplicate faces
 mesh.remove_unreferenced_vertices()
 
 print("Shape model loaded and validated.")
