@@ -13,7 +13,7 @@ def rect2sph(A):
 
     if projlen == 0:
         lon = 0.0
-    # current longitudes from -180 to +180. Switch strings bellow ON if you need longitudes from 0 to 360.
+    # current longitudes from -180 to +180. Switch strings below ON if you need longitudes from 0 to 360.
     # if lon < 0:
     #     lon += 360
 

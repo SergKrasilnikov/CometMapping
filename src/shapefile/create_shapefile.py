@@ -5,7 +5,7 @@ import numpy as np
 # === Config ===
 input_excel = "C:/Learning/Coding/GIT/67P-coordinates/data/output/coordinates_cartesian_Fornasier.xlsx"
 output_obj = "C:/Learning/Coding/GIT/67P-coordinates/data/output/shapefile_Fornasier.obj"
-sphere_radius = 0.02  # Diameter = 0.04 m
+sphere_radius = 0.02  # set the diameter = 0.04 m
 
 # === Load Excel ===
 df = pd.read_excel(input_excel)

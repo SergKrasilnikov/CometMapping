@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author  : XUNWJ
-# @Contact : ssssustar@163.com
-# @File    : get_tin_info.py
-# @Time    : 2025/5/21 15:45
-# @Desc    :
 from __future__ import print_function
 from __future__ import division
 import bpy
