@@ -38,10 +38,10 @@ file that could be opened in 3D software.
 ```
 CartToSpher_coord.py & CartToSpher_coord_file.py
 ```
-Transform Cartesian coordinates to Spherical coordinates. Program `CartToSpher_coord.py` uses manually typed Cartesian 
-coordinates and returns Original, Cartesian-to-Spherical and Spherical-to-Cartesian (for comparison) coordinates.
-`CartToSpher_coord_file.py` as input uses an Excel file 'x', 'y' and 'z' columns of Cartesian coordinates. The program
-returns the original Excel file adding two columns: 'Longitude' and 'Latitude'.
+Transform Cartesian coordinates to Spherical coordinates. The program `CartToSpher_coord.py` uses manually typed
+Cartesian coordinates and returns Original, Cartesian-to-Spherical and Spherical-to-Cartesian (for comparison)
+coordinates. `CartToSpher_coord_file.py` uses an Excel file with ‘x’, ‘y’, and ‘z’ columns of Cartesian coordinates.
+The program returns the original Excel file with two added columns: ‘Longitude’ and ‘Latitude’.
 
 ```
 ray_surf_intersec.py & ray_surf_intersec_file.py
@@ -49,30 +49,31 @@ ray_surf_intersec.py & ray_surf_intersec_file.py
 Transform Spherical coordinates to Cartesian coordinates using the ray tracing approach. Program `ray_surf_intersec.py`
 uses manually typed Spherical coordinates, defines the ray origin  [0.0, 0.0, 0.0] and returns a list of valid
 intersections of the ray with the shape model of the object. In case of more than one intersection, the program chooses
-the farthest intersection in a 3.5 km radius. Typing the Spherical coordinates program returns Cartesian coordinates.
-`ray_surf_intersec_file.py` as input uses an Excel file 'Longitude' and 'Latitude' columns of Spherical coordinates.
-The program returns the original Excel file adding three 'x', 'y' and 'z' columns of Cartesian coordinates.
+the farthest intersection within a 3.5 km radius. Typing the Spherical coordinates program returns Cartesian
+coordinates. `ray_surf_intersec_file.py` as input, uses an Excel file with ‘Longitude’ and ‘Latitude’ columns of
+Spherical coordinates. The program returns the original Excel file, adding three ‘x’, ‘y’, and ‘z’ columns of Cartesian
+coordinates.
 
 ```
 Comet67P_mapping.py
 ```
-Using matplotlib libraries to map features in Equirectangular projection. Program `Comet67P_mapping.py` uses an Excel
-file with the Longitude and Latitude coordinates of features and a preload base map. As the base map, the hillshade map
-of Comet 67P was used in Equirectangular projection.
+Using matplotlib libraries to map features in Equirectangular projection. The program `Comet67P_mapping.py` uses an
+Excel file with the Longitude and Latitude coordinates of features and a preloaded base map. As the base map, the
+hillshade map of Comet 67P was used in Equirectangular projection.
 
 ---
 
-### Data (__CORRECT__)
-- Our mapping results [Zenodo](https://)
-- Fornasier water exposure dataset [____](https://) - the dataset published by Fornasier et al.,
-[(2023)](https://) used for comparision with our results.
-- Comet 67P/Churyumov–Gerasimenko shape models and based on it hilshade map [SHAP5](https://) and
-[SHAP8](https://)
+### Data
+- Our mapping results [Zenodo](https://doi.org/10.5281/zenodo.16401875)
+- Fornasier water exposure dataset - the dataset published by Fornasier et al.,
+[(2023)](https://doi.org/10.1051/0004-6361/202245614) used for comparison with our results.
+- The latest comet 67P/Churyumov–Gerasimenko shape model is SHAP8 relised by Jorda et al., [(2016)](https://www.sciencedirect.com/science/article/pii/S0019103516301385?via%3Dihub#metrics).
 
 ---
 
-### How to cite:(__CORRECT__)
+### How to cite:
 These programs used in a scientific project will be published in 2025-2026:
 
->Krasilnikov, S.S., Wu, B., Skorov, Yu., Xin, Y., Xun, W., Küppers, M., 2025. The mechanisms of water ice exposure on
-> the surface of comet 67P/Churyumov-Gerasimenko
+>Krasilnikov, S., Wu, B., Skorov, Y., Xin, Y., Li, H., Xun, W., Zhao, Y., Jia, R. and Küppers, M., 2026. Water ice 
+> exposure mechanism on the surface of comet 67P/Churyumov–Gerasimenko. Monthly Notices of the Royal Astronomical 
+> Society, 548(3), p.stag716.
